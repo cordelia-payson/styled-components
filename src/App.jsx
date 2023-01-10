@@ -1,11 +1,16 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import './App.css';
-import styled, { keyframes } from 'styled-components';
+import { useState } from 'react';
+import styled, { keyframes, ThemeProvider } from 'styled-components';
+import Child from './Child.jsx';
+import { theme } from './theme.js';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   background-color: pink;
+  text-align: center;
 `;
 
 const Title = styled.h1`
@@ -16,7 +21,7 @@ const Title = styled.h1`
 const Button = styled.button`
   width: auto;
   margin: 20px;
-  background-color: ${props => props.color || 'blue'};
+  background-color: ${props => props.color || 'DarkSeaGreen'};
 `;
 
 const rotate = keyframes`
@@ -30,7 +35,8 @@ const rotate = keyframes`
 
 const Rotate = styled.div`
   display: inline-block;
-  animation: ${rotate} 4s linear infinite;
+  animation: ${rotate} ${props => props.speed} linear infinite;
+  /* animation: : 4s ${rotate} linear infinite; */
   margin: 20px;
   color: black;
   font-family: Arial;
@@ -51,35 +57,46 @@ const MultiElementContainer = styled.div`
 const MultiElement = styled.div`
   font-family: Monaco;
   margin: 10px;
+  padding: 5px;
+  border: 2px solid black;
+  &:hover {
+    background: teal;
+  }
 `;
 
 function App() {
+  const [speed, setSpeed] = useState('2s');
   return (
-    <Container className="App">
-      <Title>Styled Components</Title>
+    <ThemeProvider theme={theme}>
 
-      {/* Props  */}
-      <div>
-      <Button>Button 1</Button>
-      <Button color={'green'}>Button 2</Button>
-      </div>
+      <Container className="App">
+        <Title>Styled Components</Title>
+
+        {/* Props  */}
+        <div>
+          <Button>Button 1</Button>
+          <Button color={'LightSkyBlue'}>Button 2</Button>
+        </div>
 
 
-      {/* Rotate */}
-      <Rotate>rotate</Rotate>
+        {/* Extended */}
+        <Rotate speed={speed}>rotate</Rotate>
+        <BigRotate speed={speed}>rotate</BigRotate>
 
-      {/* Extended */}
-      <BigRotate>ROTATE</BigRotate>
+        {/*  as  */}
+        <MultiElementContainer>
+          <MultiElement as="button" >Button</MultiElement>
+          <MultiElement as="a" href="https://styled-components.com/">Link</MultiElement>
+          <MultiElement as="p">Paragraph</MultiElement>
+        </MultiElementContainer>
 
-      {/*  as  */}
-      <MultiElementContainer>
-        <MultiElement as="button">Button</MultiElement>
-        <MultiElement as="a" href="https://styled-components.com/">Link</MultiElement>
-        <MultiElement as="p">Paragraph</MultiElement>
-      </MultiElementContainer>
+        <Child />
 
-    </Container>
+      </Container>
+    </ThemeProvider>
+
   );
 }
 
 export default App;
+
