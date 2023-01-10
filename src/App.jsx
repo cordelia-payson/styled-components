@@ -36,7 +36,6 @@ const rotate = keyframes`
 const Rotate = styled.div`
   display: inline-block;
   animation: ${rotate} ${props => props.speed} linear infinite;
-  /* animation: : 4s ${rotate} linear infinite; */
   margin: 20px;
   color: black;
   font-family: Arial;
@@ -59,6 +58,7 @@ const MultiElement = styled.div`
   margin: 10px;
   padding: 5px;
   border: 2px solid black;
+  background: transparent;
   &:hover {
     background: teal;
   }
@@ -85,7 +85,7 @@ function App() {
 
         {/*  as  */}
         <MultiElementContainer>
-          <MultiElement as="button" >Button</MultiElement>
+          <MultiElement as="button" onClick={(evt) => setSpeed(speed === '4s' ? '2s' :'4s')}>Button</MultiElement>
           <MultiElement as="a" href="https://styled-components.com/">Link</MultiElement>
           <MultiElement as="p">Paragraph</MultiElement>
         </MultiElementContainer>
